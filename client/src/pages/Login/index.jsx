@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Input, Button, message, Spin } from 'antd';
-import './styles.scss';
-import { LockOutlined, MailOutlined } from '@ant-design/icons';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearErrors, login } from '../../redux/actions/userAction';
+import React, { useEffect, useState } from "react";
+import { Input, Button, message, Spin } from "antd";
+import "./styles.scss";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { clearErrors, login } from "../../redux/actions/userAction";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -13,15 +13,15 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const [loginEmail, setLoginEmail] = useState('admin@gmail.com');
-  const [loginPassword, setLoginPassword] = useState('11111111');
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
 
   const loginSubmit = (e) => {
     e.preventDefault();
     dispatch(login(loginEmail, loginPassword));
   };
 
-  const redirect = location.search ? `/${location.search.split('=')[1]}` : '/';
+  const redirect = location.search ? `/${location.search.split("=")[1]}` : "/";
 
   useEffect(() => {
     if (error) {
