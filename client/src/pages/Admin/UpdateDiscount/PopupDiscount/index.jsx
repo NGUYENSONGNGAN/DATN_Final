@@ -1,12 +1,18 @@
-import { Button, InputNumber, Select } from 'antd';
-import React, { useState } from 'react';
-import { formatPrice } from '../../../../utils/products';
+import { Button, InputNumber, Select, message } from "antd";
+import React, { useEffect, useState } from "react";
+import { formatPrice } from "../../../../utils/products";
 
 const PopupDiscount = ({ updateDiscount, loading }) => {
-  let product = JSON.parse(sessionStorage.getItem('product'));
+  let product = JSON.parse(sessionStorage.getItem("product"));
 
   const [isPresent, setIsPresent] = useState(product.isPresent);
   const [amount, setAmount] = useState(product.amount);
+
+  useEffect(() => {
+    if (isPresent == false && amount > Number(product.price)) {
+      message.error("Số lượng giảm không được vượt quá giá sản phẩm.");
+    }
+  }, [isPresent, amount, product]);
 
   return (
     <div>
@@ -14,7 +20,7 @@ const PopupDiscount = ({ updateDiscount, loading }) => {
         <span>Giá tiền ban đầu: </span> <span>{product.price && formatPrice(product.price)}</span>
       </div>
       <label className="mt-3" htmlFor="">
-        Hình thức giảm:{' '}
+        Hình thức giảm:{" "}
       </label>
       <Select className="d-block" value={isPresent} onChange={setIsPresent}>
         <Select.Option value={true}>Giảm theo %</Select.Option>
@@ -27,12 +33,12 @@ const PopupDiscount = ({ updateDiscount, loading }) => {
         value={amount}
         onChange={setAmount}
         className="d-block"
-        style={{ width: '100%' }}
-        placeholder={!isPresent ? 'Giảm theo giá' : 'Giảm theo % (1-100)'}
+        style={{ width: "100%" }}
+        placeholder={!isPresent ? "Giảm theo giá" : "Giảm theo % (1-100)"}
       />
 
       <div className="mt-3">
-        <span>Giá tiền sau khi giảm: </span>{' '}
+        <span>Giá tiền sau khi giảm: </span>{" "}
         <span>
           {product.price &&
             formatPrice(
